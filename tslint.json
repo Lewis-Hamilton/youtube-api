@@ -1,9 +1,9 @@
 {
   "defaultSeverity": "error",
-  "extends": ["./node_modules/gts/tslint.json"],
+  "extends": "tslint-config-airbnb",
   "jsRules": {},
   "rules": {
-    "esModuleInterop": false
+    "eofline": false
   },
   "rulesDirectory": []
 }

@@ -3,10 +3,13 @@ import cloudinary = require('cloudinary');
 import {MongoService} from '../..';
 require('dotenv').config();
 
+import DatauriParser = require('datauri/parser');
+const parser = new DatauriParser();
 interface Body {
   title: string;
   description: string;
   thumbnail: string;
+  quality: number;
 }
 
 export const videoPostService = async (
@@ -20,18 +23,16 @@ export const videoPostService = async (
   });
 
   try {
-    await cloudinary.v2.uploader
-      .upload_stream(
-        {
-          quality_analysis: true,
-          transformation: {quality: 50},
-          resource_type: 'video',
-          discard_original_filename: false,
-        },
-        async (err, result) => {
-          if (err) {
-            throw err;
-          }
+    const videoFile = parser.format(file.video.mimetype, file.video.data);
+
+    const result = await cloudinary.v2.uploader.upload_large(
+      videoFile.content ? videoFile.content : '',
+      {
+        transformation: {quality: body.quality || 100},
+        resource_type: 'video',
+      },
+      async (error, result) => {
+        if (result) {
           await MongoService.db('Videos')
             .collection('Video Entries')
             .insertOne({
@@ -41,10 +42,14 @@ export const videoPostService = async (
               thumbnail:
                 body.thumbnail || result?.secure_url.slice(0, -3) + 'jpg',
             });
+          Promise.resolve(result);
+        } else {
+          Promise.reject(error);
         }
-      )
-      .end(file.video.data);
-    return {success: true};
+      }
+    );
+
+    return {success: true, body: result};
   } catch (err) {
     return {success: false, error: err};
   }
