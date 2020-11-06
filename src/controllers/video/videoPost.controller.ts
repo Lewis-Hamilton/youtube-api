@@ -8,7 +8,7 @@ export const VideoPostController = async (req: Request, res: Response) => {
     }
     const file = req.files;
 
-    const result = await videoPostService(file);
+    const result = await videoPostService(file, req.body);
 
     res.send(result);
   } catch (err) {

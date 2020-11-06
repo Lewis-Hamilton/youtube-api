@@ -3,7 +3,16 @@ import cloudinary = require('cloudinary');
 import {MongoService} from '../..';
 require('dotenv').config();
 
-export const videoPostService = async (file: fileUpload.FileArray) => {
+interface Body {
+  title: string;
+  description: string;
+  thumbnail: string;
+}
+
+export const videoPostService = async (
+  file: fileUpload.FileArray,
+  body: Body
+) => {
   cloudinary.v2.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -26,10 +35,11 @@ export const videoPostService = async (file: fileUpload.FileArray) => {
           await MongoService.db('Videos')
             .collection('Video Entries')
             .insertOne({
-              title: file.video.name,
-              description: '',
+              title: body.title || file.video.name,
+              description: body.description || '',
               url: result?.secure_url,
-              thumbnail: result?.secure_url.slice(0, -3) + 'jpg',
+              thumbnail:
+                body.thumbnail || result?.secure_url.slice(0, -3) + 'jpg',
             });
         }
       )
