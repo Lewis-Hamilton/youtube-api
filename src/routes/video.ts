@@ -4,12 +4,15 @@ import {VideoBySearchController} from '../controllers/video/videoBySearch.contro
 import wrapAsync from '../middleware/async.middleware';
 import {VideoListController} from '../controllers/video/videoList.controller';
 import {VideoPostController} from '../controllers/video/videoPost.controller';
+import {ManualVideoPostController} from '../controllers/video/manualVideoPost.controller';
 
 const router: Router = Router();
 
 router.get('/', wrapAsync(VideoListController));
 
 router.post('/upload', wrapAsync(VideoPostController));
+
+router.post('/upload/manual', wrapAsync(ManualVideoPostController));
 
 router.get('/search', wrapAsync(VideoBySearchController));
 
