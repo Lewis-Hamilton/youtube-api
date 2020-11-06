@@ -31,17 +31,18 @@
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "gts lint",
-    "clean": "gts clean",
-    "compile": "tsc",
-    "fix": "gts fix",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run lint",
+    "start": "node lib",
+    "dev": "npm run build && node lib",
+    "test:coverage": "jest --config jestconfig.json --collect-coverage",
+    "test": "jest --config jestconfig.json",
     "build": "tsc",
-    "start": "node lib/src",
-    "dev": "npm run build && node lib/src"
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "semantic-release": "semantic-release",
+    "precommit": "npm run lint && npm run format"
   },
   "husky": {
     "hooks": {
