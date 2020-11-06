@@ -31,8 +31,8 @@
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "start": "node lib",
-    "dev": "npm run build && node lib",
+    "start": "node lib/src",
+    "dev": "npm run build && node lib/src",
     "test:coverage": "jest --config jestconfig.json --collect-coverage",
     "test": "jest --config jestconfig.json",
     "build": "tsc",

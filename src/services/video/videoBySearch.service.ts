@@ -1,10 +1,11 @@
 import {MongoService} from '../../index';
 
-export const VideoBySearchService = async (search: string) => {
+export const VideoBySearchService = async (term: string) => {
+  console.log(term);
   try {
     const result = await MongoService.db('Videos')
-      .collection('Videos Entries')
-      .find({$text: {$search: search}})
+      .collection('Video Entries')
+      .find({$text: {$search: term}})
       .toArray();
     return {success: true, body: result};
   } catch (err) {
