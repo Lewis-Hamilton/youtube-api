@@ -1,4 +1,4 @@
-import {Request, Response} from 'express';
+import {query, Request, Response} from 'express';
 import {ManualVideoPostService} from '../../services/video/manualVideoPost.service';
 
 export const ManualVideoPostController = async (
@@ -6,7 +6,7 @@ export const ManualVideoPostController = async (
   res: Response
 ) => {
   try {
-    const result = await ManualVideoPostService(req.body);
+    const result = await ManualVideoPostService(req.body, req.query);
 
     res.send(result);
   } catch (err) {
