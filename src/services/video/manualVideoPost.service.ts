@@ -46,6 +46,7 @@ export const ManualVideoPostService = async (body: Body, query: any) => {
           description: body.description,
           url: body.url,
           thumbnail: result.secure_url,
+          creation_date: moment().format(),
         },
       };
     } else {
