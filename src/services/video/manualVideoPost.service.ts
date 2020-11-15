@@ -1,5 +1,6 @@
 import {MongoService} from '../..';
 import cloudinary = require('cloudinary');
+import moment from 'moment';
 require('dotenv').config();
 
 interface Body {
@@ -30,6 +31,7 @@ export const ManualVideoPostService = async (body: Body, query: any) => {
                 description: body.description,
                 url: body.url,
                 thumbnail: result.secure_url,
+                creation_date: moment().format(),
               });
             Promise.resolve(result);
           } else {
