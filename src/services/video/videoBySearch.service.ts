@@ -1,7 +1,6 @@
 import {MongoService} from '../../index';
 
 export const VideoBySearchService = async (term: string) => {
-  console.log(term);
   try {
     const result = await MongoService.db('Videos')
       .collection('Video Entries')
