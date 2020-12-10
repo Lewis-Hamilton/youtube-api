@@ -9,7 +9,6 @@ const VideoByIdService = async (_id: string) => {
       .findOne({_id: o_id});
     return {success: true, body: result};
   } catch (err) {
-    console.log(err);
     return {success: false, error: err};
   }
 };
