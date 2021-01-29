@@ -17,7 +17,7 @@ export const AdminCreateService = async (body: Body) => {
         email,
         username,
         uid,
-        creation_date: moment().format(),
+        creationDate: moment().format(),
       });
 
     return {

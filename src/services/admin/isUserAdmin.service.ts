@@ -6,7 +6,7 @@ interface AdminList {
   email: string;
   username: string;
   uid: string;
-  creation_date: string;
+  creationDate: string;
 }
 
 export const IsUserAdminService = async (uid: string) => {
